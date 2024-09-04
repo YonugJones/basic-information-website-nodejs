@@ -1,0 +1,20 @@
+{
+  "name": "basic-information-website-nodejs",
+  "version": "1.0.0",
+  "description": "simple information website to demonstrate basic knowledge of back end server creating and routing in nodejs",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YonugJones/basic-information-website-nodejs.git"
+  },
+  "author": "Peter Kerfoot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YonugJones/basic-information-website-nodejs/issues"
+  },
+  "homepage": "https://github.com/YonugJones/basic-information-website-nodejs#readme"
+}
