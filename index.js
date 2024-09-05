@@ -1,42 +1,56 @@
-import { createServer } from 'node:http';
 import fs from 'node:fs';
+import express from 'express';
+import dotenv from 'dotenv';
 
-const hostname = 'localhost';
-const port = 8080;
+dotenv.config();
 
-const server = createServer((req, res) => {
-  res.setHeader('Content-Type', 'text/html')
+const PORT = process.env.PORT || 3000;
+const app = express();
 
-  let path = './pages/';
-  switch(req.url) {
-    case '/': 
-      path += 'index.html';
-      res.statusCode = 200;
-      break;
-    case '/about':
-      path += 'about.html';
-      res.statusCode = 200;
-      break;
-    case '/contact-me':
-      path += 'contact-me.html';
-      res.statusCode = 200;
-      break;
-    default:
-      path += '404.html';
-      res.statusCode = 404;
-      break;
-  }
-
-  fs.readFile(path, (err, data) => {
+app.get('/', (req, res) => {
+  fs.readFile('./pages/index.html', (err, data) => {
     if (err) {
-      console.log(err);
-      res.end();
+      res.status(500).send('Server Error')
     } else {
-      res.end(data);
+      res.setHeader('Content-Type', 'text/html')
+      res.status(200).send(data);
     }
   });
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`)
+app.get('/about', (req, res) => {
+  fs.readFile('./pages/about.html', (err, data) => {
+    if (err) {
+      res.status(500).send('Server Error')
+    } else {
+      res.setHeader('Content-Type', 'text/html')
+      res.status(200).send(data);
+    }
+  });
 });
+
+app.get('/contact-me', (req, res) => {
+  fs.readFile('./pages/contact-me.html', (err, data) => {
+    if (err) {
+      res.status(500).send('Server Error');
+    } else {
+      res.setHeader('Content-Type', 'text/html');
+      res.status(200).send(data);
+    }
+  });
+});
+
+app.use((req, res) => {
+  fs.readFile('./pages/404.html', (err, data) => {
+    if (err) {
+      res.status(500).send('Server Error')
+    } else {
+      res.setHeader('Content-Type', 'text/html');
+      res.status(404).send(data);
+    }
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Port running at http://localhost:${PORT}/`);
+})
